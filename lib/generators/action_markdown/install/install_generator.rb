@@ -39,7 +39,10 @@ module ActionMarkdown
           append_to_file "app/javascript/application.js", %(import "@github/markdown-toolbar-element"\n)
 
           say "Install @github/markdown-toolbar-element", :green
-          run "yarn add @github/markdown-toolbar-element@2.1.1"
+          run "npm install @github/markdown-toolbar-element@2.1.1" if Rails.root.join("package-lock.json").exist?
+          run "bun add @github/markdown-toolbar-element@2.1.1" if Rails.root.join("bun.lockb").exist?
+          run "yarn add @github/markdown-toolbar-element@2.1.1" if Rails.root.join("yarn.lock").exist?
+          run "pnpm add @github/markdown-toolbar-element@2.1.1" if Rails.root.join("pnpm-lock.yaml").exist?
         else
           say <<~TEXT.squish, :red
             You must either be running with node (package.json) or
